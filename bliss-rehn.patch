@@ -1,0 +1,74 @@
+--- ./graph.cc.orig	2012-03-16 10:55:45.139266642 -0600
++++ ./graph.cc	2012-03-16 10:57:42.429090440 -0600
+@@ -597,16 +597,6 @@ public:
+ };
+ 
+ 
+-
+-
+-typedef struct {
+-  unsigned int splitting_element;
+-  unsigned int certificate_index;
+-  unsigned int subcertificate_length;
+-  UintSeqHash eqref_hash;
+-} PathInfo;
+-
+-
+ bool
+ AbstractGraph::search(const bool canonical, Stats& stats)
+ {
+@@ -753,7 +743,6 @@ AbstractGraph::search(const bool canonic
+   initialize_certificate();
+ 
+   std::vector<TreeNode> search_stack;
+-  std::vector<PathInfo> first_path_info;
+   std::vector<PathInfo> best_path_info;
+ 
+   search_stack.clear();
+@@ -5466,7 +5455,7 @@ Graph::nucr_find_first_component(const u
+   component.clear();
+   component_elements = 0;
+   sh_return = 0;
+-  unsigned int sh_first  = 0;
++  unsigned int sh_first  = 1 << 31;
+   unsigned int sh_size   = 0;
+   unsigned int sh_nuconn = 0;
+ 
+--- ./graph.hh.orig	2012-03-16 10:55:45.153266622 -0600
++++ ./graph.hh	2012-03-16 11:00:26.851843429 -0600
+@@ -109,9 +109,12 @@ public:
+   unsigned long int get_max_level() const {return max_level;}
+ };
+ 
+-
+-
+-
++typedef struct {
++  unsigned int splitting_element;
++  unsigned int certificate_index;
++  unsigned int subcertificate_length;
++  UintSeqHash eqref_hash;
++} PathInfo;
+ 
+ 
+ /**
+@@ -355,7 +358,7 @@ protected:
+    */
+   unsigned int cr_component_elements;
+ 
+-
++  std::vector<PathInfo> first_path_info;
+ 
+ 
+ public:
+@@ -508,6 +511,10 @@ public:
+     opt_use_long_prune = active;
+   }
+ 
++  /**
++   * Get an information vector about the first path.
++   */
++  std::vector<PathInfo> get_first_path_info() { return first_path_info; }
+ };
+ 
+ 
