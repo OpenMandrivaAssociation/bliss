@@ -5,7 +5,7 @@ Summary:        Compute automorphism groups and canonical labelings of graphs
 
 
 License:        GPLv3
-URL:            http://www.tcs.hut.fi/Software/bliss/
+URL:            https://www.tcs.hut.fi/Software/bliss/
 Source0:        http://www.tcs.hut.fi/Software/bliss/%{name}-%{version}.zip
 # Man page written by Jerry James using text borrowed from the sources.
 # The man page therefore has the same copyright and license as the sources.
